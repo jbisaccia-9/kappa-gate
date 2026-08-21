@@ -45,7 +45,9 @@ built to catch (see `tests/test_gate.py::test_gate_fails_on_kappa_alone`).
 ## Quickstart
 
 ```
-python -m venv .venv && .venv/bin/pip install -r requirements.txt
+python -m venv .venv
+.venv/bin/pip install -U pip           # stock macOS pip is too old for editable installs
+.venv/bin/pip install -e ".[dev]"
 .venv/bin/python -m pytest -q          # unit tests, no network
 .venv/bin/python -m kappagate run      # mock mode, end to end, no network
 .venv/bin/python -m kappagate gate     # watch the mock judge get refused
