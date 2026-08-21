@@ -1,5 +1,7 @@
 # kappa-gate
 
+[![ci](https://github.com/jbisaccia-9/kappa-gate/actions/workflows/ci.yml/badge.svg)](https://github.com/jbisaccia-9/kappa-gate/actions) · [captured results](RESULTS.md)
+
 **An LLM-as-judge evaluation harness where the judge itself must pass a gate.**
 
 Most eval pipelines trust their judge implicitly: a model grades outputs, the
