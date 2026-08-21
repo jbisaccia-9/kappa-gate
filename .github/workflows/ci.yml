@@ -1,0 +1,30 @@
+name: ci
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -e ".[dev]"
+      - run: pytest -q
+      # Pipeline smoke: the mock judge runs end-to-end with no network.
+      # Its gate result is printed but NOT enforced - the mock exists to fail.
+      - run: |
+          python -m kappagate run --mode mock
+          python -m kappagate gate || echo "mock judge failed the gate (expected - see README)"
+  live-calibration:
+    # Manual trigger only: judges the golden set with the real model and
+    # enforces the calibration gate. Requires ANTHROPIC_API_KEY repo secret.
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -e ".[dev]"
+      - run: python -m kappagate run --mode live --record
+      - run: python -m kappagate gate

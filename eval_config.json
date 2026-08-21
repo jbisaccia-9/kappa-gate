@@ -1,0 +1,8 @@
+{
+  "rubric_version": "1.0",
+  "judge_model": "claude-opus-5",
+  "calibration_gate": {
+    "verdict_kappa_min": 0.70,
+    "verdict_agreement_min": 0.85
+  }
+}

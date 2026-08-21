@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kappagate"
+version = "0.1.0"
+description = "LLM-as-judge evaluation harness where the judge itself must pass a calibration gate"
+requires-python = ">=3.9"
+dependencies = ["anthropic"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
