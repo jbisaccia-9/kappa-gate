@@ -9,6 +9,7 @@ jobs:
         with: {python-version: "3.12"}
       - run: pip install -e ".[dev]"
       - run: pytest -q
+      - run: python -m kappagate suite
       # Pipeline smoke: the mock judge runs end-to-end with no network.
       # Its gate result is printed but NOT enforced - the mock exists to fail.
       - run: |

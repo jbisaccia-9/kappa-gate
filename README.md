@@ -44,6 +44,41 @@ by exploiting surface features, and the κ gate correctly refuses it anyway.
 High accuracy with chance-level κ is exactly the degenerate judge this repo is
 built to catch (see `tests/test_gate.py::test_gate_fails_on_kappa_alone`).
 
+## The flow
+
+```mermaid
+flowchart TB
+    GS["golden set: 30 hand-labeled cases"] --> J
+    RB["rubric v1.0 (G, C, S anchors)"] --> J
+    subgraph J["candidate judge"]
+        LIVE["live: claude-opus-5"]
+        CACHE["cache: recorded replay"]
+        MOCK["mock: heuristic, built to fail"]
+    end
+    J --> SCORES["dimension scores G, C, S"]
+    SCORES --> VR["verdict rule (computed, never judged)"]
+    VR --> AGG["agreement + Cohen's kappa vs human labels"]
+    AGG --> CG{"calibration gate: kappa >= 0.70 and agreement >= 0.85"}
+    CG -- "pass" --> TRUST["judge admitted: may gate releases"]
+    CG -- "fail" --> REFUSE["judge refused: nothing ships on its scores"]
+
+    subgraph EVAL["Braintrust-shaped eval: data, task, scorers"]
+        D["data: golden cases + recorded judgments"] --> T["task: replay recorded judge"] --> SC["scorers: verdict_match, dimensions_exact"]
+    end
+    CACHE --> D
+    SC -- "regression" --> CIF["CI fails"]
+    SC -.-> BT["Braintrust hosted tracking (obs extra)"]
+```
+
+## Eval structure (Braintrust-shaped)
+
+`python -m kappagate suite` runs the `Eval(data, task, scores)` contract
+keyless: data is the golden set joined with the recorded judge run, the task
+replays those judgments, and the scorers (`verdict_match`,
+`dimensions_exact`) fail CI on regression. With `pip install ".[obs]"` and
+`BRAINTRUST_API_KEY`, `push_braintrust()` hands the identical suite to hosted
+Braintrust.
+
 ## Quickstart
 
 ```

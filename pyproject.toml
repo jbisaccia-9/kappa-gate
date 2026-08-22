@@ -11,6 +11,7 @@ dependencies = ["anthropic"]
 
 [project.optional-dependencies]
 dev = ["pytest"]
+obs = ["braintrust"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

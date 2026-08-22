@@ -15,7 +15,11 @@ def main():
     runp.add_argument("--record", action="store_true",
                       help="live mode: record judgments to cache/ for replay")
     sub.add_parser("gate", help="apply the calibration gate to results/report.json")
+    sub.add_parser("suite", help="Braintrust-shaped eval suite over the recorded run")
     args = ap.parse_args()
+    if args.cmd == "suite":
+        from .btsuite import run_local
+        sys.exit(run_local())
     if args.cmd == "run":
         summary = harness.run(mode=args.mode, record=args.record)
         print(json.dumps(summary, indent=2))

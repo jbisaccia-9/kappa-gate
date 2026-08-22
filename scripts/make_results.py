@@ -12,7 +12,7 @@ import subprocess
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 PY = str(ROOT / ".venv" / "bin" / "python")
 
-COMMANDS = [("Unit tests", ["-m", "pytest", "-q"], False), ("Replay the recorded claude-opus-5 calibration", ["-m", "kappagate", "run", "--mode", "cache"], False), ("Calibration gate on the recorded run", ["-m", "kappagate", "gate"], False)]
+COMMANDS = [("Unit tests", ["-m", "pytest", "-q"], False), ("Replay the recorded claude-opus-5 calibration", ["-m", "kappagate", "run", "--mode", "cache"], False), ("Calibration gate on the recorded run", ["-m", "kappagate", "gate"], False), ("Braintrust-shaped eval suite", ["-m", "kappagate", "suite"], False)]
 
 out = [f"# Results\n",
        f"Generated {datetime.date.today()} by `scripts/make_results.py` — "

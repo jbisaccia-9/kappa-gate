@@ -53,3 +53,13 @@ PASS  verdict_kappa: 1.0 (min 0.7)
   PASS  verdict_agreement: 1.0 (min 0.85)
 GATE: PASSED - judge 'claude-opus-5' cleared calibration on rubric 1.0.
 ```
+
+## Braintrust-shaped eval suite
+
+`python -m kappagate suite` — exit 0, OK
+
+```
+verdict_match: 1.0
+  dimensions_exact: 0.5
+SUITE: PASS - judge verdicts hold.
+```
