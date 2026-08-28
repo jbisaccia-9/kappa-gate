@@ -2,6 +2,8 @@
 
 [![ci](https://github.com/jbisaccia-9/kappa-gate/actions/workflows/ci.yml/badge.svg)](https://github.com/jbisaccia-9/kappa-gate/actions) · [captured results](RESULTS.md)
 
+![the gate refusing an uncalibrated judge, then admitting a calibrated one](docs/demo.gif)
+
 **An LLM-as-judge evaluation harness where the judge itself must pass a gate.**
 
 Most eval pipelines trust their judge implicitly: a model grades outputs, the
